@@ -1,7 +1,6 @@
 package com.github.iamnatri.mscartoes.domain;
 
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
