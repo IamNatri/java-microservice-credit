@@ -13,6 +13,6 @@ public interface ClienteResourceClient {
     ResponseEntity<DadosCliente> dadosCliente(@RequestParam("cpf") String cpf);
 
     @GetMapping
-    public String status();
+    String status();
 
 }
