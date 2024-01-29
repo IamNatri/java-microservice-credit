@@ -25,9 +25,8 @@ public class AvaliadorCreditoController {
 
     @GetMapping(value = "/situacao-cliente", params = "cpf")
     public ResponseEntity consultarSituacaoCliente(@RequestParam("cpf") String cpf){
-        SituacaoCliente situacaoCliente = null;
         try {
-            situacaoCliente = avaliadorCreditoService.obterSituacaoCliente(cpf);
+            SituacaoCliente situacaoCliente = avaliadorCreditoService.obterSituacaoCliente(cpf);
             return ResponseEntity.ok(situacaoCliente);
         } catch (DadosClienteNotFoundException e) {
             return ResponseEntity.notFound().build();
