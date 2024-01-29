@@ -1,7 +1,6 @@
 package com.github.IamNatri.msclientes.application;
 
 import com.github.IamNatri.msclientes.application.representation.ClienteSaveRequest;
-import com.github.IamNatri.msclientes.domain.Cliente;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
