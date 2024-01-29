@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: msavalidorcredito
+
+server:
+  port: 0
+
+logging:
+  file:
+    name: msavaliadorcredito.log
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

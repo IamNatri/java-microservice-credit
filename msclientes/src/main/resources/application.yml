@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: msclientes
+
+
+server:
+    port: 0
+
+logging:
+  file:
+    name: msclientes.log
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
