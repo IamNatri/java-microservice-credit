@@ -2,7 +2,8 @@
 
 *.gz
 *.exe
-
+docker/keycloak
+docker/rabbitmq
 
 #
 
