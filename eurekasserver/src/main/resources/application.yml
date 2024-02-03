@@ -1,6 +1,13 @@
 spring:
   application:
     name: eurekaserver
+  security:
+    basic:
+      enabled: true
+    user:
+      name: ms-eureka-user
+      password: ke-usue-masrer
+
 
 server:
   port: 8761
@@ -10,3 +17,4 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+

@@ -19,7 +19,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_URI:http://ms-eureka-user:ke-usue-masrer@localhost:8761/eureka}
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
