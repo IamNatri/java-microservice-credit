@@ -2,9 +2,11 @@ package com.github.iamnatri.msavaliadorcredito.application;
 
 import com.github.iamnatri.msavaliadorcredito.application.ex.DadosClienteNotFoundException;
 import com.github.iamnatri.msavaliadorcredito.application.ex.ErroComunicacaoMicroserviceException;
+import com.github.iamnatri.msavaliadorcredito.application.ex.ErroSolicitacaoCartaoException;
 import com.github.iamnatri.msavaliadorcredito.domain.model.*;
 import com.github.iamnatri.msavaliadorcredito.infra.clients.CartoesResourceClient;
 import com.github.iamnatri.msavaliadorcredito.infra.clients.ClienteResourceClient;
+import com.github.iamnatri.msavaliadorcredito.infra.mq.SolicitacaoEmissaoCartaoPublisher;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,9 +24,12 @@ public class AvaliadorCreditoService {
 
     private final ClienteResourceClient clientesClient;
     private final CartoesResourceClient cartoesClient;
+    private final SolicitacaoEmissaoCartaoPublisher emissaoCartaoPublisher;
 
 
-    public SituacaoCliente obterSituacaoCliente(String cpf) throws DadosClienteNotFoundException, ErroComunicacaoMicroserviceException {
+
+    public SituacaoCliente obterSituacaoCliente(String cpf)
+            throws DadosClienteNotFoundException, ErroComunicacaoMicroserviceException {
         try {
             ResponseEntity<DadosCliente> dadosClienteResponse = clientesClient.dadosCliente(cpf);
             ResponseEntity<List<CartaoCliente>> cartoesResponse = cartoesClient.getCartoesByCliente(cpf);
@@ -63,7 +69,7 @@ public class AvaliadorCreditoService {
                     BigDecimal idadebd = BigDecimal.valueOf(dadosCliente.getIdade());
                     var fatorIdade = idadebd.divide(BigDecimal.valueOf(100));
                     BigDecimal rendaCliente = BigDecimal.valueOf(renda);
-                    BigDecimal fatorRendaCliente = rendaCliente.divide(BigDecimal.valueOf(1000));
+                    BigDecimal fatorRendaCliente = rendaCliente.divide(BigDecimal.valueOf(10000));
 
 
                     BigDecimal limiteAprovado = fatorRendaCliente.multiply(limiteBasico);
@@ -93,5 +99,14 @@ public class AvaliadorCreditoService {
 
         }
 
+    }
+    public ProtocoloSolicitacaoCartao solicitarEmissaoCartao(DadosSolicitacaoEmissaoCartao payload) {
+        try {
+            emissaoCartaoPublisher.solicitarCartao(payload);
+            var protocolo = UUID.randomUUID().toString();
+            return new ProtocoloSolicitacaoCartao(protocolo);
+        } catch (Exception e) {
+            throw new ErroSolicitacaoCartaoException(e.getMessage());
+        }
     }
 }

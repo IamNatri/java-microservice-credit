@@ -39,7 +39,8 @@ public class CartoesController {
     }
 
     @GetMapping(params = "cpf")
-    public ResponseEntity<List<CartoesPorClienteReponse>> getCartoesByCliente(@ RequestParam("cpf") String cpf){
+    public ResponseEntity<List<CartoesPorClienteReponse>> getCartoesByCliente(
+            @ RequestParam("cpf") String cpf){
         List<ClienteCartao> lista = clienteCartaoService.listCartoesByCpf(cpf);
         List<CartoesPorClienteReponse> cartoes = lista.stream()
                 .map(CartoesPorClienteReponse::fromDomain)
