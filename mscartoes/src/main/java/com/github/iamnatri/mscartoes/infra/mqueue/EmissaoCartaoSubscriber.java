@@ -8,6 +8,7 @@ import com.github.iamnatri.mscartoes.domain.DadosSolicitacaoEmissaoCartao;
 import com.github.iamnatri.mscartoes.infra.repository.CartaoRepository;
 import com.github.iamnatri.mscartoes.infra.repository.ClienteCartaoRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class EmissaoCartaoSubscriber {
 
     private final CartaoRepository cartaoRepository;
@@ -36,8 +38,7 @@ public class EmissaoCartaoSubscriber {
             clienteCartaoRepository.save(clienteCartao);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erro ao processar solicitação de cartão: " + e.getMessage());
+            log.error("Erro ao processar solicitação de cartão: {}", e.getMessage());
         }
 
 

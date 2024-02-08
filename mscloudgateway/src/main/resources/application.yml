@@ -11,7 +11,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/realms/mscreditrealm
+          issuer-uri: http://${KEYCLOAK_SERVER}:${KEYCLOAK_PORT}/realms/mscreditrealm
 
 server:
   port: 8080
@@ -21,4 +21,4 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defalutZone: ${EUREKA_URI:http://ms-eureka-user:ke-usue-masrer@localhost:8761/eureka}
+      defalutZone: ${EUREKA_URI:http://ms-eureka-user:ke-usue-masrer@${EUREKA_SERVER}:8761/eureka}
