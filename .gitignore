@@ -4,7 +4,7 @@
 *.exe
 docker/keycloak
 docker/rabbitmq
-
+/log
 #
 
 .idea
