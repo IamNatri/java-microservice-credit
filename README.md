@@ -3,8 +3,7 @@
 This project is a microservice project using Spring Boot, Spring Cloud, netflix eureka.
 
 # communication
- syncronous communication using fangfeign
-
+ Assync communication using **RABBITMQ**
 # empacotando a aplicação
 command line starter
 ```shell
